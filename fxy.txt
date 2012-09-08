@@ -1,0 +1,6 @@
+octave:1> data=load("-ascii", "iny-f-110.txt");
+octave:2> y=data(:,2);
+octave:3> dx=data(:,3);
+octave:4> plot(y,dx)
+octave:5> plot(y,dx.*cos(y./180.*pi).*6371000.*pi./180)
+

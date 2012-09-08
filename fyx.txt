@@ -1,0 +1,45 @@
+> data=load("-ascii", "inx-f-39.txt");
+> x=data(:,1);
+> size(x)
+ans =
+   9116      1
+> x(1)
+ans =  73.655
+> x(9116)
+ans =  119.23
+> dy=data(:,4).*(6371000*pi/180);
+> plot(x,dy)
+
+plot(abs(fft(dy)))
+The two peaks are at 47 and 138, thus the frequencies are 46/45.575=1.0093 and 137/45.575=3.0060, there 45.575 is the range of x. We just assume they are 1 and 3.
+Our model is fy=b+k*x+a1*sin(2pix)+a2*cos(2pix)+a3*cos(6pix)+a4*cos(6pix).
+
+> mx=[ones(size(x)),x,sin(2.*pi.*x),cos(2.*pi.*x),sin(6.*pi.*x),cos((6.*pi.*x))];
+> std(mx*(pinv(mx)*dy)-dy)
+ans =  0.38114
+
+The result is good.
+
+Let's see the coefficients:
+> pinv(mx)*dy
+ans =
+  -160.45195
+     2.42764
+    13.33287
+    -0.27150
+    13.30099
+    -0.82075
+
+so fy(x,39.36)=...
+
+We can combine sin and cos of the same freqnency:
+> atan(0.82075/13.30099)
+ans =  0.061628
+> atan(0.27150/13.33287)
+ans =  0.020360
+> mx=[ones(size(x)),x,sin(2.*pi.*x-0.020360),sin(6.*pi.*x-0.061628)]; std(mx*(pinv(mx)*dy)-dy)
+ans =  0.38114
+
+so fy(x,39.36)=...
+
+
