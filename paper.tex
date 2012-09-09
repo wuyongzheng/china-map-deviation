@@ -15,18 +15,26 @@
 \section{Notation}
 We need to find out two functions, $f_x(x,y)$ and $f_y(x,y)$, to describe the
 deviation. $x$ and $y$ are the true longitude and latitude respectively.
-$f_x(x,y)$ and $f_y(x,y)$ are the deviation at point $(x,y)$. In other words,
-if $(x,y)$ is the deviated coordinate, then $(f_x(x,y)+x,f_y(x,y)+y)$ is the
-deviated coordinate.
-Since $|f_x(x+d,y)-f_x(x,y)|$ is much smaller than $d$, and same for $y$,
+$f_x(x,y)$ and $f_y(x,y)$ are the deviation delta at point $(x,y)$.
+In other words, if $(x,y)$ is the true coordinate, then
+$(x+f_x(x,y),y+f_y(x,y))$ is the deviated coordinate.
+Since $|f_x(x+d,y)-f_x(x,y)|$ is much smaller than $d$ (and same for $y$)
 we can also
 use the two functions to calculate the true coordinate from a deviated
-coordinate, i.e. if $(x,y)$ is the deviated coordinate, then
-$(x-f_x(x,y),y-f_y(x,y))$ is the true coordinate.
+coordinate.
+Let $(x,y)$ be the deviated coordinate, $(x-f_x(x,y),y-f_y(x,y))$ is the
+true coordinate.
+
+We first solve the functions in one dimension by setting one parameter to be
+constant.
+I.e. instead of solving $f_x(x,y)$ directly, we first solve $f_x(x,c)$
+and $f_x(c,y)$, where $c$ is a constant.
+For example, we will look at $f_x(x,39.36)$ and $f_x(110.16,y)$.
+Similarly, we will solve $f_y(x,c)$ and $f_y(c,y)$ before $f_y(x,y)$.
 
 In the following analysis, we will use octave.
-
-In my previous post, ... we first solve the functions in one dimention by setting one parameter to be constant.
+All the data used in the analysis has already been posted in my previous
+article\footnote{url}.
 
 \section{The four 1D cases}
 \subsection{$f_x(const,y)$}
@@ -36,7 +44,7 @@ $f_x(const,y)$ looks like to be the simplest, so we solve it first.
 \verb|> data=load("-ascii", "iny-f-110.txt");| \\
 \verb|> y=data(:,2);| \\
 \verb|> dx=data(:,3);| \\
-\verb|> plot(y,dx)       | \hfill Figure~\ref{fig:fxy-degree}(left)
+\verb|> plot(y,dx)| \hfill Figure~\ref{fig:fxy-degree}(left)
 
 \begin{figure}[htb]
 \begin{center}
@@ -157,8 +165,6 @@ ans =
     -0.82075
 \end{verbatim}
 
-So the function is $f_y(x,39.36)=-160.45195+2.42764x+13.33287sin(2\pi
-x)-0.27150cos(2\pi x)+13.30099cos(6\pi x)-0.82075cos(6\pi x)$.
 We can combine sin and cos of the same frequency.
 
 \begin{verbatim}
@@ -176,14 +182,22 @@ ans =
     13.3356
     13.3263
 \end{verbatim}
-So the function is $f_y(x,39.36)=-160.45195+2.42764x+13.3356sin(2\pi
-x-0.061628)+13.3263cos(6\pi x-0.020360)$.
+So the function is
+\begin{eqnarray}
+f_y(x,39.36) & = & -160.45195+2.42764x+13.33287sin(2\pi x) \nonumber \\
+             &   & -0.27150cos(2\pi x)+13.30099cos(6\pi x)-0.82075cos(6\pi x) \nonumber \\
+             & = & -160.45195+2.42764x+13.3356sin(2\pi x-0.061628) \nonumber \\
+             &   & +13.3263cos(6\pi x-0.020360)
+\end{eqnarray}
 
 After trying out other constant latitudes, we find out that the first two
 coefficients to be changing but the last 4 coefficients to be fixed.
 Thus, we know
-$f_y(x,y)=g_1(y)+g_2(y)x+13.3356sin(2\pi x-0.061628)+13.3263cos(6\pi
-x-0.020360)$, where $g_1(y)$ and $g_2(y)$ are not yet known.
+\begin{eqnarray}
+f_y(x,y) & = & g_1(y)+g_2(y)x+13.3356sin(2\pi x-0.061628) \nonumber \\
+         &   & +13.3263cos(6\pi x-0.020360)
+\end{eqnarray}
+where $g_1(y)$ and $g_2(y)$ are not yet known.
 
 \subsection{$f_x(x, const)$}
 Similar to previous one, we use Fourier transform to find out the sinusoidal
@@ -271,7 +285,7 @@ coeff =
 
 \begin{figure}[htb]
 \begin{center}
-\includegraphics[width=0.48\textwidth]{fxx-lc2.png}
+\includegraphics[width=0.6\textwidth]{fxx-lc2.png}
 \end{center}
 \caption{9-order polynomial (green) and 9-order polynomial + sinusoidal (blue)}
 \label{fig:fxx-lc2}
@@ -280,8 +294,8 @@ coeff =
 Although the 9-order polynomial fits the data well (error is 0.79 meters),
 the function is ugly.
 After lots of tries\footnote{
-I have spent most time here, but there is nothing to say about it because it's
-simply trying different functions.
+Most of the time has been spent here, but there is nothing to say about it
+because it's simply trying different functions.
 There are still a little bit of technique though.
 For example, the two green peaks in Figure~\ref{fig:fxx-lc2} have distance
 about 24 in x-axis, thus there might be a sinusoidal component of period 24.
@@ -346,10 +360,14 @@ ans =
    1.3332e+01
 \end{verbatim}
 
-Finally, $f_x(x,39.36) = 1205.1 -18.402x +0.094012x^2 +200.45sin(\pi
-x/30+1.5666) -99.62sin(\pi x/12+0.78550) -26.699sin(\pi x/3-0.0034165)
--13.343sin(\pi x-0.0097763) +13.344sin(2\pi x-0.020612) +13.332sin(6\pi
-x-0.061772)$. To see how the components fit the data, we can graduately add
+Finally, we have
+\begin{eqnarray}
+f_x(x,39.36) & = & 1205.1 -18.402x +0.094012x^2 +200.45sin(\pi x/30+1.5666) \nonumber \\
+             &   & -99.62sin(\pi x/12+0.78550) -26.699sin(\pi x/3-0.0034165) \nonumber \\
+             &   & -13.343sin(\pi x-0.0097763) +13.344sin(2\pi x-0.020612) \nonumber \\
+             &   & +13.332sin(6\pi x-0.061772)
+\end{eqnarray}
+To see how the components fit the data, we can graduately add
 the higher frequency components. Figure 5.5 shows this this idea. Figure 5.6 is
 a zoomed in region in Figure 5.5. The first function (in red) is the quadratic
 function $1205.1 -18.402x +0.094012x^2$. The second function (in green) adds
@@ -362,36 +380,97 @@ to it, etc.
 \includegraphics[width=0.48\textwidth]{fxx-lc4.png}
 \end{center}
 \caption{Decomposition of Components.
+Left: overall; right: zoomed in.
 The first function (red) has only the lowest frequency component.
 The second function (green) adds the second lowest frequency component to the
 first function.
-The third (blue) adds another component, etc.
-Right side is a zoomed-in region in right side.}
+The third (blue) adds another component, etc.}
 \label{fig:fxx-lc3}
 \end{figure}
 
 After trying out other constant latitude, we found that only the first two
 coefficients are affected by latitude. The rest of the coefficients do not
-change. Thus, we can write $f_x(x,y)=g_1(y) -g_2(y)x +0.094012x^2
-+200.45sin(\pi x/30+1.5666) -99.62sin(\pi x/12+0.78550) -26.699sin(\pi
-x/3-0.0034165) -13.343sin(\pi x-0.0097763) +13.344sin(2\pi x-0.020612)
-+13.332sin(6\pi x-0.061772)$, where $g_1(y)$ and $g_2(y)$ are not yet known.
+change. Thus, we have
+\begin{eqnarray}
+f_x(x,y) &=& g_1(y) -g_2(y)x +0.094012x^2 +200.45sin(\pi x/30+1.5666) \nonumber \\
+         & & -99.62sin(\pi x/12+0.78550) -26.699sin(\pi x/3-0.0034165) \nonumber \\
+         & & -13.343sin(\pi x-0.0097763) +13.344sin(2\pi x-0.020612) \nonumber \\
+         & & +13.332sin(6\pi x-0.061772)
+\end{eqnarray}
+where $g_1(y)$ and $g_2(y)$ are not yet known.
 
 \subsection{$f_y(const, y)$}
 
-The process of finding $f_y(const, y)$ is similar to $f_x(x, const)$, so I skip
-it. The function is similar to $f_x(x, const)$ except that the two high
-frequency sinusoidal components do not appear in $f_y(const, y)$.
+The process of finding $f_y(const, y)$ is similar to $f_x(x, const)$, except
+that the two high frequency sinusoidal components do not appear in $f_y(const,
+y)$.
+\begin{verbatim}
+> data=load("-ascii", "iny-a-110.txt");
+> y=data(:,2);
+> dy=data(:,4).*(6371000*pi/180);
+> my=[ones(size(y)),y,y.*y,sin(pi.*y./30),cos(pi.*y./30),\
+  sin(pi.*y./12),cos(pi.*y./12),sin(pi.*y./3),cos(pi.*y./3),\
+  sin(pi.*y),cos((pi.*y))]; std(my*(pinv(my)*dy)-dy)
+ans =    0.16683
+> pinv(my)*dy
+ans =
+       162.1
+     -22.422
+     0.41569
+     -172.78
+      56.189
+     -104.96
+     -29.351
+      13.251
+      23.113
+     -13.357
+   -0.061311
+> atan(56.189/-172.78)
+ans =   -0.31442
+> atan(-29.351/-104.96)
+ans =    0.27267
+> atan(23.113/13.251)
+ans =     1.0502
+> atan(-0.061311/-13.357)
+ans =  0.0045901
+> my=[ones(size(y)),y,y.*y,sin(pi.*y./30-0.31442),\
+  sin(pi.*y./12+0.27267),sin(pi.*y./3+1.0502),\
+  sin(pi.*y+0.0045901)]; std(my*(pinv(my)*dy)-dy)
+ans =    0.16683
+> pinv(my)*dy
+ans =
+      162.09
+     -22.422
+     0.41568
+     -181.69
+     -108.99
+      26.643
+     -13.357
+\end{verbatim}
+
+We have
+\begin{eqnarray}
+f_y(110.16,y) &=& 162.09-22.422y+0.41568y^2 \nonumber \\
+              & & -181.69sin(\pi y/30-0.31442)-108.99sin(\pi y/12+0.27267) \nonumber \\
+              & & +26.643sin(\pi y/3+1.05)-13.357sin(\pi y-0.00459) \\
+f_y(x,y)      &=& g_1(x)+g_2(x)y+0.41568y^2 \nonumber \\
+              & & -181.69sin(\pi y/30-0.31442)-108.99sin(\pi y/12+0.27267) \nonumber \\
+              & & +26.643sin(\pi y/3+1.05)-13.357sin(\pi y-0.00459)
+\end{eqnarray}
 
 \section{The final 2D case: $f_x(x,y)$ and $f_y(x,y)$}
 With out too much effort, we have found out the two functions:
-$f_x(x,y) = 1598.1-23.605x -8.4345y +0.09933xy +0.10069x^2
-+199.1cos(\pi(x+0.017)/30) -99.772sin(\pi(x+0.0039)/12+\pi/4)
--26.687sin(\pi(x-0.0039)/3) -13.345sin(\pi(x-0.0039))
-+13.338sin(2\pi(x-0.0039)) +13.331sin(6\pi(x-0.0039))$ $f_y(x,y) = -36.759
-+1.5218x +10.002y -0.10032xy -0.03661y^2 -217.44cos(\pi(y+8.143)/30)
-+106.41sin(\pi(y+1.1)/12) -26.697sin(\pi(y+1)/3) +13.335sin(\pi y)
--13.329sin(2\pi(x-0.0039)) -13.319sin(6\pi(x-0.0039))$
+
+\begin{eqnarray}
+f_x(x,y) &=& 1598.1-23.605x -8.4345y +0.09933xy +0.10069x^2 \nonumber \\
+          & & +199.1cos(\pi(x+0.017)/30) -99.772sin(\pi(x+0.0039)/12+\pi/4) \nonumber \\
+          & & -26.687sin(\pi(x-0.0039)/3) -13.345sin(\pi(x-0.0039)) \nonumber \\
+          & & +13.338sin(2\pi(x-0.0039)) +13.331sin(6\pi(x-0.0039)) \\
+f_y(x,y) &=& -36.759 +1.5218x +10.002y -0.10032xy -0.03661y^2 \nonumber \\
+         & & -217.44cos(\pi(y+8.143)/30)+106.41sin(\pi(y+1.1)/12) \nonumber \\
+         & & -26.697sin(\pi(y+1)/3) +13.335sin(\pi y) \nonumber \\
+         & & -13.329sin(2\pi(x-0.0039)) -13.319sin(6\pi(x-0.0039))
+\end{eqnarray}
 The standard errors are 0.43747 and 0.44031 meters respectively.
 
 To verify the correctness, we can 
