@@ -1,0 +1,3 @@
+%global https://khms1.google.com/kh/v=122&src=app&x=431651&y=198668&z=19&s=Galil
+%china  https://mts2.google.com/vt/lyrs=s@122&hl=x-local&gl=CN&src=app&x=431660&y=198665&z=19&s=Galil
+
