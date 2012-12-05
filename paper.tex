@@ -25,18 +25,20 @@ coordinate.
 Let $(x,y)$ be the deviated coordinate, $(x-f_x(x,y),y-f_y(x,y))$ is the
 true coordinate.
 
+In the following analysis, we will use octave.
+All the data used in the analysis has already been posted in my previous
+article\footnote{\url{http://wuyongzheng.wordpress.com/2010/01/22/china-map-deviation-as-a-regression-problem/}}.
+
+\section{The four 1D cases}
+
 We first solve the functions in one dimension by setting one parameter to be
 constant.
 I.e. instead of solving $f_x(x,y)$ directly, we first solve $f_x(x,c)$
 and $f_x(c,y)$, where $c$ is a constant.
 For example, we will look at $f_x(x,39.36)$ and $f_x(110.16,y)$.
 Similarly, we will solve $f_y(x,c)$ and $f_y(c,y)$ before $f_y(x,y)$.
+In total, there are four 1D cases.
 
-In the following analysis, we will use octave.
-All the data used in the analysis has already been posted in my previous
-article\footnote{url}.
-
-\section{The four 1D cases}
 \subsection{$f_x(const,y)$}
 $f_x(const,y)$ looks like to be the simplest, so we solve it first.
 
@@ -459,7 +461,7 @@ f_y(x,y)      &=& g_1(x)+g_2(x)y+0.41568y^2 \nonumber \\
 \end{eqnarray}
 
 \section{The final 2D case: $f_x(x,y)$ and $f_y(x,y)$}
-With out too much effort, we have found out the two functions:
+With out too much effort, we can find out the two functions:
 
 \begin{eqnarray}
 f_x(x,y) &=& 1598.1-23.605x -8.4345y +0.09933xy +0.10069x^2 \nonumber \\
@@ -473,6 +475,7 @@ f_y(x,y) &=& -36.759 +1.5218x +10.002y -0.10032xy -0.03661y^2 \nonumber \\
 \end{eqnarray}
 The standard errors are 0.43747 and 0.44031 meters respectively.
 
-To verify the correctness, we can 
+To verify the correctness, we can compute the deviated coordinates of Monument
+to the People's Heroes given its true coordinates.
 
 \end{document}
