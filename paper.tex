@@ -80,7 +80,11 @@ ans =
    406.3954
      2.5241
 \end{verbatim}
-The standard error, 0.14664 meters, is acceptable.
+The standard error, 0.14664 meter, is acceptable, because the input data's
+resolution is about 0.6 meter\footnote{The input is converted from google map's
+unit. One unit is one pixel under the maximum zoom setting. Due to Mercator
+projection, higher latitude has higher resolution. The average 0.6 meter is
+computed based on the mean coordinate, which is near Xi'an city.} on average.
 The final function is
 \begin{equation}
 f_x(110.16,y)=406.3954+2.5241y
@@ -90,6 +94,7 @@ we find out that the two coefficients are different for different longitude.
 We have
 \begin{equation}
 f_x(x,y)=g_1(x)+g_2(x)\times y
+\label{eq:fxy}
 \end{equation}
 where $g_1(x)$ and $g_2(x)$ are not yet known.
 
@@ -461,21 +466,45 @@ f_y(x,y)      &=& g_1(x)+g_2(x)y+0.41568y^2 \nonumber \\
 \end{eqnarray}
 
 \section{The final 2D case: $f_x(x,y)$ and $f_y(x,y)$}
-With out too much effort, we can find out the two functions:
+
+From Equation~\ref{eq:fxx} and \ref{eq:fxy} we know that $f_x(x,y)$ and
+$f_y(x,y)$ must be in the following form.
 
 \begin{eqnarray}
-f_x(x,y) &=& 1598.1-23.605x -8.4345y +0.09933xy +0.10069x^2 \nonumber \\
-          & & +199.1cos(\pi(x+0.017)/30) -99.772sin(\pi(x+0.0039)/12+\pi/4) \nonumber \\
-          & & -26.687sin(\pi(x-0.0039)/3) -13.345sin(\pi(x-0.0039)) \nonumber \\
-          & & +13.338sin(2\pi(x-0.0039)) +13.331sin(6\pi(x-0.0039)) \\
-f_y(x,y) &=& -36.759 +1.5218x +10.002y -0.10032xy -0.03661y^2 \nonumber \\
-         & & -217.44cos(\pi(y+8.143)/30)+106.41sin(\pi(y+1.1)/12) \nonumber \\
-         & & -26.697sin(\pi(y+1)/3) +13.335sin(\pi y) \nonumber \\
-         & & -13.329sin(2\pi(x-0.0039)) -13.319sin(6\pi(x-0.0039))
+f_x(x,y) &=& a_1+a_2x+a_3y+a_4xy+a_5x^2 \nonumber \\
+         & & +a_6sin(\pi x/30+b_1) +a_7sin(\pi x/12+b_2)+a_8sin(\pi x/3+b_3) \nonumber \\
+         & & +a_9sin(\pi x+b_4)+a_{10}sin(2\pi x +b_5) +a_{11}sin(6\pi x+b_6) \\
+f_y(x,y) &=& c_1 +c_2x +c_3y +c_4xy +c_5y^2 \nonumber \\
+         & & +c_6sin(\pi y/30+d_1)+c_7sin(\pi y/12 +d_2)+c_8sin(\pi y/3+d_3) \nonumber \\
+         & & +c_9sin(\pi y+d_4)+c_{10}sin(2\pi x+d_5) +c_{11}sin(6\pi x +d_6)
 \end{eqnarray}
-The standard errors are 0.43747 and 0.44031 meters respectively.
 
-To verify the correctness, we can compute the deviated coordinates of Monument
-to the People's Heroes given its true coordinates.
+Applying the previous method on the data file \url{google-grid40.tsv}, we can
+determine all the parameters easily.
+The octave commands are skipped.
+The resulting equations are shown below and their standard errors are 0.4373
+and 0.43998 meters respectively.
+
+\begin{eqnarray}
+f_x(x,y) &=& 1596.7-23.578x -8.431y +0.0993xy +0.10056x^2 \nonumber \\
+          & & -199.11sin(\pi x/30-1.5692) -99.77sin(\pi x/12+0.78662) \nonumber \\
+          & & -26.687sin(\pi x/3-0.0040926) -13.344sin(\pi x-0.012222) \nonumber \\
+          & & +13.338sin(2\pi x -0.024649) +13.331sin(6\pi x-0.073931) \\
+f_y(x,y) &=& 42.304 -1.522x -10.376y +0.10032xy +0.041777y^2 \nonumber \\
+         & & -217.35sin(\pi y/30 -0.71213)-106.38sin(\pi y/12 +0.28733) \nonumber \\
+         & & +26.698sin(\pi y/3+1.0481) -13.335sin(\pi y+0.00012317) \nonumber \\
+         & & +13.329sin(2\pi x-0.024639) +13.319sin(6\pi x -0.073933)
+\end{eqnarray}
+
+To verify their correctness, we can compute the deviated coordinates of Monument
+to the People's Heroes using its true coordinates.
+$f_x(116.391667,39.903056)=531.91$ meters and
+$f_y(116.391667,39.903056)=155.39$ meters.
+This means that the deviated coordinate is 531.91 meters to the east and 155.39
+to the north, thus $x'=116.391667+531.91\times 360/(2\pi\times 6371000\times
+cos(2\pi\times 39.903056/360))=116.397903$ and $y'=39.903056+155.39\times
+360/(2\pi\times 6371000)=39.904453$.
+We now put the deviated coordinate in a deviated map as in Figure~\ref{fig:map-jjmdd}.
+It aligns nicely.
 
 \end{document}

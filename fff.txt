@@ -1,0 +1,104 @@
+octave:1> format short g
+octave:2> data=load("-ascii", "../google-grid40.tsv");
+octave:3> x=data(:,2);
+octave:4> y=data(:,1);
+octave:5> dx=data(:,3)./(2^18 * 256 / 360).*cos(pi./180.*y).*6371000*pi./180;
+octave:6> mx=[ones(size(x)),x,y,x.*y,x.*x, sin(x*pi/30), cos(x*pi/30), sin(x*pi/12), cos(x*pi/12),sin(x*pi/3), cos(x*pi/3),sin(x*pi), cos(x*pi),sin(x*pi*2), cos(x*pi*2),sin(x*pi*6), cos(x*pi*6)]; std(mx*(pinv(mx)*dx)-dx)
+ans =     0.4373
+octave:7> pinv(mx)*dx
+ans =
+      1596.6
+     -23.576
+     -8.4311
+    0.099301
+     0.10056
+    -0.31524
+      199.11
+     -70.462
+     -70.634
+     -26.687
+     0.10922
+     -13.343
+     0.16309
+      13.334
+    -0.32873
+      13.294
+    -0.98463
+octave:11> atan(199.11/-0.31524)
+ans =    -1.5692
+octave:12> atan(-70.634/-70.462)
+ans =    0.78662
+octave:13> atan(0.10922/-26.687)
+ans = -0.0040926
+octave:14> atan(0.16309/-13.343)
+ans =  -0.012222
+octave:15> atan(-0.32873/13.334)
+ans =  -0.024649
+octave:16> atan(-0.98463/13.294)
+ans =  -0.073931
+octave:17> mx=[ones(size(x)),x,y,x.*y,x.*x, sin(x*pi/30-1.5692), sin(x*pi/12+0.78662), sin(x*pi/3-0.0040926), sin(x*pi-0.012222), sin(x*pi*2-0.024649), sin(x*pi*6-0.073931)]; std(mx*(pinv(mx)*dx)-dx)
+ans =     0.4373
+octave:18> pinv(mx)*dx
+ans =
+      1596.7
+     -23.578
+      -8.431
+      0.0993
+     0.10056
+     -199.11
+      -99.77
+     -26.687
+     -13.344
+      13.338
+      13.331
+
+
+octave:8> dy=-data(:,4)./(2^18 * 256 / 360).*cos(pi./180.*y).*6371000*pi./180;
+octave:9> my=[ones(size(x)),x,y,x.*y,y.*y, sin(y*pi/30), cos(y*pi/30), sin(y*pi/12), cos(y*pi/12),sin(y*pi/3), cos(y*pi/3),sin(y*pi), cos(y*pi),sin(x*pi*2), cos(x*pi*2),sin(x*pi*6), cos(x*pi*6)]; std(my*(pinv(my)*dy)-dy)
+ans =    0.43998
+octave:10> pinv(my)*dy
+ans =
+      42.264
+     -1.5221
+     -10.374
+     0.10033
+    0.041757
+     -164.52
+      142.02
+     -102.02
+     -30.148
+      13.328
+      23.133
+     -13.335
+  -0.0016425
+      13.325
+    -0.32838
+      13.282
+    -0.98377
+octave:19> atan(142.02/-164.52)
+ans =   -0.71213
+octave:20> atan(-30.148/-102.02)
+ans =    0.28733
+octave:21> atan(23.133/13.328)
+ans =     1.0481
+octave:22> atan(-0.0016425/-13.335)
+ans = 0.00012317
+octave:23> atan(-0.32838/13.325)
+ans =  -0.024639
+octave:24> atan(-0.98377/13.282)
+ans =  -0.073933
+octave:25> my=[ones(size(x)),x,y,x.*y,y.*y, sin(y*pi/30-0.71213), sin(y*pi/12+0.28733), sin(y*pi/3+1.0481), sin(y*pi+0.00012317), sin(x*pi*2-0.024639), sin(x*pi*6-0.073933)]; std(my*(pinv(my)*dy)-dy)
+ans =    0.43998
+octave:26> pinv(my)*dy
+ans =
+      42.304
+      -1.522
+     -10.376
+     0.10032
+    0.041777
+     -217.35
+     -106.38
+      26.698
+     -13.335
+      13.329
+      13.319
