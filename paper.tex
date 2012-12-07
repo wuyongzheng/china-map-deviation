@@ -1,3 +1,4 @@
+%6378137 EARTH_RADIUS in https://developers.google.com/maps/documentation/flash/reference
 \documentclass[a4paper]{article}
 \usepackage{graphicx}
 \usepackage{url}
@@ -93,8 +94,8 @@ After trying out other constant longitudes,
 we find out that the two coefficients are different for different longitude.
 We have
 \begin{equation}
-f_x(x,y)=g_1(x)+g_2(x)\times y
 \label{eq:fxy}
+f_x(x,y)=g_1(x)+g_2(x)\times y
 \end{equation}
 where $g_1(x)$ and $g_2(x)$ are not yet known.
 
@@ -175,10 +176,10 @@ ans =
 We can combine sin and cos of the same frequency.
 
 \begin{verbatim}
-> atan(0.82075/13.30099)
-ans =  0.061628
-> atan(0.27150/13.33287)
-ans =  0.020360
+> atan(-0.82075/13.30099)
+ans =  -0.061628
+> atan(-0.27150/13.33287)
+ans =  -0.020360
 > mx=[ones(size(x)),x,sin(2.*pi.*x-0.020360),sin(6.*pi.*x-0.061628)];
 > std(mx*(pinv(mx)*dy)-dy)
 ans =  0.38114
@@ -201,6 +202,7 @@ After trying out other constant latitudes, we find out that the first two
 coefficients to be changing but the last 4 coefficients to be fixed.
 Thus, we know
 \begin{eqnarray}
+\label{eq:fyx}
 f_y(x,y) & = & g_1(y)+g_2(y)x+13.3356sin(2\pi x-0.061628) \nonumber \\
          &   & +13.3263cos(6\pi x-0.020360)
 \end{eqnarray}
@@ -340,16 +342,16 @@ Now let's merge sin and cos.
 \begin{verbatim}
 > atan(2.0044e+02/8.3824e-01)
 ans =  1.5666
-> atan(7.0449e+01/7.0435e+01)
+> atan(-7.0449e+01/-7.0435e+01)
 ans =  0.78550
-> atan(9.1218e-02/2.6699e+01)
-ans =  0.0034165
-> atan(1.3044e-01/1.3342e+01)
-ans =  0.0097763
-> atan(2.7504e-01/1.3342e+01)
-ans =  0.020612
-> atan(8.2298e-01/1.3306e+01)
-ans =  0.061772
+> atan(9.1218e-02/-2.6699e+01)
+ans =  -0.0034165
+> atan(1.3044e-01/-1.3342e+01)
+ans =  -0.0097763
+> atan(-2.7504e-01/1.3342e+01)
+ans =  -0.020612
+> atan(-8.2298e-01/1.3306e+01)
+ans =  -0.061772
 > mx=[ones(size(x)),x,x.*x,sin(pi.*x./30+1.5666),sin(pi.*x./12+0.78550),\
   sin(pi.*x./3-0.0034165),sin(pi.*x-0.0097763),sin(2.*pi.*x-0.020612),\
   sin(6.*pi.*x-0.061772)]; std(mx*(pinv(mx)*dx)-dx)
@@ -399,6 +401,7 @@ After trying out other constant latitude, we found that only the first two
 coefficients are affected by latitude. The rest of the coefficients do not
 change. Thus, we have
 \begin{eqnarray}
+\label{eq:fxx}
 f_x(x,y) &=& g_1(y) -g_2(y)x +0.094012x^2 +200.45sin(\pi x/30+1.5666) \nonumber \\
          & & -99.62sin(\pi x/12+0.78550) -26.699sin(\pi x/3-0.0034165) \nonumber \\
          & & -13.343sin(\pi x-0.0097763) +13.344sin(2\pi x-0.020612) \nonumber \\
@@ -460,6 +463,7 @@ We have
 f_y(110.16,y) &=& 162.09-22.422y+0.41568y^2 \nonumber \\
               & & -181.69sin(\pi y/30-0.31442)-108.99sin(\pi y/12+0.27267) \nonumber \\
               & & +26.643sin(\pi y/3+1.05)-13.357sin(\pi y-0.00459) \\
+\label{eq:fyy}
 f_y(x,y)      &=& g_1(x)+g_2(x)y+0.41568y^2 \nonumber \\
               & & -181.69sin(\pi y/30-0.31442)-108.99sin(\pi y/12+0.27267) \nonumber \\
               & & +26.643sin(\pi y/3+1.05)-13.357sin(\pi y-0.00459)
@@ -467,23 +471,28 @@ f_y(x,y)      &=& g_1(x)+g_2(x)y+0.41568y^2 \nonumber \\
 
 \section{The final 2D case: $f_x(x,y)$ and $f_y(x,y)$}
 
-From Equation~\ref{eq:fxx} and \ref{eq:fxy} we know that $f_x(x,y)$ and
-$f_y(x,y)$ must be in the following form.
+From Equation~\ref{eq:fxx} and \ref{eq:fxy} we know that $f_x(x,y)$ must be in
+the form of Equation~\ref{eq:fxp}.  Similarly, from Equation~\ref{eq:fyx} and
+\ref{eq:fyy} we know $f_y(x,y)$ must be in the form of Equation~\ref{eq:fyp}.
+What's left now is to determine the parameters.
 
 \begin{eqnarray}
+\label{eq:fxp}
 f_x(x,y) &=& a_1+a_2x+a_3y+a_4xy+a_5x^2 \nonumber \\
          & & +a_6sin(\pi x/30+b_1) +a_7sin(\pi x/12+b_2)+a_8sin(\pi x/3+b_3) \nonumber \\
          & & +a_9sin(\pi x+b_4)+a_{10}sin(2\pi x +b_5) +a_{11}sin(6\pi x+b_6) \\
+\label{eq:fyp}
 f_y(x,y) &=& c_1 +c_2x +c_3y +c_4xy +c_5y^2 \nonumber \\
          & & +c_6sin(\pi y/30+d_1)+c_7sin(\pi y/12 +d_2)+c_8sin(\pi y/3+d_3) \nonumber \\
          & & +c_9sin(\pi y+d_4)+c_{10}sin(2\pi x+d_5) +c_{11}sin(6\pi x +d_6)
 \end{eqnarray}
 
-Applying the previous method on the data file \url{google-grid40.tsv}, we can
-determine all the parameters easily.
+Applying the previous linear regression method on the data file
+\url{google-grid40.tsv}, we can determine all the parameters easily.
 The octave commands are skipped.
 The resulting equations are shown below and their standard errors are 0.4373
-and 0.43998 meters respectively.
+and 0.43998 meters respectively, which are larger than the
+four 1D cases, but still below the input data's resolution.
 
 \begin{eqnarray}
 f_x(x,y) &=& 1596.7-23.578x -8.431y +0.0993xy +0.10056x^2 \nonumber \\
@@ -496,15 +505,24 @@ f_y(x,y) &=& 42.304 -1.522x -10.376y +0.10032xy +0.041777y^2 \nonumber \\
          & & +13.329sin(2\pi x-0.024639) +13.319sin(6\pi x -0.073933)
 \end{eqnarray}
 
-To verify their correctness, we can compute the deviated coordinates of Monument
-to the People's Heroes using its true coordinates.
+To check their correctness, we can compute a deviated coordinate and check
+whether it aligns with the deviated map.
+We now compute the deviated coordinate of the Monument to the People's Heroes
+using its true coordinate $(116.391667,39.903056)$.
 $f_x(116.391667,39.903056)=531.91$ meters and
 $f_y(116.391667,39.903056)=155.39$ meters.
 This means that the deviated coordinate is 531.91 meters to the east and 155.39
-to the north, thus $x'=116.391667+531.91\times 360/(2\pi\times 6371000\times
-cos(2\pi\times 39.903056/360))=116.397903$ and $y'=39.903056+155.39\times
-360/(2\pi\times 6371000)=39.904453$.
-We now put the deviated coordinate in a deviated map as in Figure~\ref{fig:map-jjmdd}.
-It aligns nicely.
+to the north.
+We then convert meters into degrees and adds them to the true coordinate.
+
+\begin{eqnarray}
+x' &=& 116.391667+531.91\times 360/(2\pi\times 6371000\times cos({2\pi \over 360}\times 39.903056)) \nonumber \\
+   &=& 116.397903 \nonumber \\
+y' &=& 39.903056+155.39\times 360/(2\pi\times 6371000) \nonumber \\
+   &=& 39.904453 \nonumber
+\end{eqnarray}
+
+We now put the deviated coordinate in a deviated map as in
+Figure~\ref{fig:map-jjmdd}.  It aligns nicely.
 
 \end{document}
