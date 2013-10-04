@@ -8,10 +8,11 @@
 
 \title{The Deviation of China Map as a Regression Problem}
 \author{Wu Yongzheng}
+\date{}
 
 \maketitle
 
-\section{The Problem}
+\section{Introduction}
 
 \section{Notation}
 We need to find out two functions, $f_x(x,y)$ and $f_y(x,y)$, to describe the
@@ -64,6 +65,10 @@ looks like a second order curve, but if we go that direction, it's going to be
 very tough.
 It is a lot simpler if we measure the deviation in meters rather
 than degrees.
+Note that earth's radius is 6378137 meters in Google Map.
+I didn't know this until the experiment was all finished.
+However, this shouldn't cause any error even if I set the radius to 1 meter,
+because in the end, meters is converted back to degrees and the error cancels.
 
 \noindent
 \verb|> plot(y,dx.*cos(y./180.*pi).*6371000.*pi./180)| \hfill
@@ -505,12 +510,17 @@ f_y(x,y) &=& 42.304 -1.522x -10.376y +0.10032xy +0.041777y^2 \nonumber \\
          & & +13.329sin(2\pi x-0.024639) +13.319sin(6\pi x -0.073933)
 \end{eqnarray}
 
+\section{Evaluation}
+
 To check their correctness, we can compute a deviated coordinate and check
 whether it aligns with the deviated map.
 We now compute the deviated coordinate of the Monument to the People's Heroes
-using its true coordinate $(116.391667,39.903056)$.
+using its true coordinate $(116.391667,39.903056)$.\footnote{
+I cannot find any authoritative location of the monument.
+The one that I use is from Wikipedia.
+}
 $f_x(116.391667,39.903056)=531.91$ meters and
-$f_y(116.391667,39.903056)=155.39$ meters.
+$f_y(116.391667,\allowbreak{}39.903056)=155.39$ meters.
 This means that the deviated coordinate is 531.91 meters to the east and 155.39
 to the north.
 We then convert meters into degrees and adds them to the true coordinate.
@@ -522,7 +532,27 @@ y' &=& 39.903056+155.39\times 360/(2\pi\times 6371000) \nonumber \\
    &=& 39.904453 \nonumber
 \end{eqnarray}
 
-We now put the deviated coordinate in a deviated map as in
-Figure~\ref{fig:map-jjmdd}.  It aligns nicely.
+\begin{figure}[htb]
+\begin{center}
+\includegraphics[width=0.6\textwidth]{gmapsat.png}
+\end{center}
+\caption{The monument's true coordinate in GMap's satellite image}
+\label{fig:gmapsat}
+\end{figure}
+
+\begin{figure}[htb]
+\begin{center}
+\includegraphics[width=0.6\textwidth]{gmapstr.png}
+\end{center}
+\caption{The monument's deviated coordinate in GMap's street map}
+\label{fig:gmapstr}
+\end{figure}
+
+The green arrow in Figure~\ref{fig:gmapsat} shows the true coordinate in the
+Google Maps' satellite image.  Figure~\ref{fig:gmapstr} shows the deviated
+coordinate in the Google Maps' street map.
+The red balloon, which is the nearest landmark, should be ignored.
+The green arrows in both maps are slightly to the southeast of the monument
+center, but as long as they offset the same amount, it is as good.
 
 \end{document}
