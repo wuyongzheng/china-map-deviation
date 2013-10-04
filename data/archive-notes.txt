@@ -1,0 +1,110 @@
+================= finding out fdx(x,y) ==============
+data=load("-ascii", "../google-grid40.tsv");
+x=data(:,2);
+y=data(:,1);
+dx=data(:,3)./(2^18 * 256 / 360).*cos(pi./180.*y).*6371000*pi./180;
+dx1=dx-(200.*cos(pi.*x./30)-100.*sin(pi.*x./12+pi/4)-26.66667.*sin(pi./3.*x)-13.33333.*sin(pi.*x)+13.33333.*sin(2.*pi.*x)+13.33333.*sin(6.*pi.*x));
+mx=[ones(size(x)),x,y,x.*y, sin(pi.*x./2000), cos(pi.*x./2000)]; std(mx*(pinv(mx)*dx1)-dx1)
+
+result:
+fdx(x,y) =  1598.1 -23.605.*x -8.4345.*y +0.09933.*x.*y +0.10069.*x.*x  +199.1.*cos(pi.*(x+0.017)./30) -99.772.*sin(pi.*(x+0.0039)./12+pi/4) -26.687.*sin(pi.*(x-0.0039)./3) -13.345.*sin(pi.*(x-0.0039)) +13.338.*sin(2.*pi.*(x-0.0039)) +13.331.*sin(6.*pi.*(x-0.0039));
+stdev = 0.43747 meters
+fdy(x,y) = -36.759 +1.5218.*x +10.002.*y -0.10032.*x.*y -0.03661.*y.*y -217.44.*cos(pi.*(y+8.143)./30) +106.41.*sin(pi.*(y+1.1)./12) -26.697.*sin(pi.*(y+1)./3) +13.335.*sin(pi.*y) -13.329.*sin(2.*pi.*(x-0.00392)) -13.319.*sin(6.*pi.*(x-0.00392))
+stdev = 0.44031 meters
+
+new result: (same as in the paper)
+fdx(x,y) =  1596.7 - 23.578*x - 8.431*y + 0.0993*x*y + 0.10056*x^2-199.11*sin(pi*x/30 - 1.5692) - 99.77*sin(pi*x/12 + 0.78662)-26.687*sin(pi*x/3 - 0.0040926) - 13.344*sin(pi*x - 0.012222)+13.338*sin(2*pi*x - 0.024649) + 13.331*sin(6*pi*x - 0.073931)
+fdy(x,y) = 42.304 -1.522*x  -10.376*y   +0.10032*x*y  +0.041777*y*y-217.35*sin(y*pi/30-0.71213)    -106.38*sin(y*pi/12+0.28733)  +26.698*sin(y*pi/3+1.0481)    -13.335*sin(y*pi+0.00012317)  +13.329*sin(x*pi*2-0.024639)    +13.319*sin(x*pi*6-0.073933)
+
+=== find out fdy(x,y) ===
+...
+dy=data(:,4)./(2^18 * 256 / 360).*6371000*pi./180;
+dy1=dy-(26.667.*sin(pi./3.*y+pi/3)-13.333.*sin(pi.*y)+13.333.*sin(2.*pi.*x) + 13.333.*sin(6.*pi.*x));
+mx=[ones(size(x)),x,y,x.*y, sin(pi.*y./30),cos(pi.*y./30),sin(pi.*y./12),cos(pi.*y./12)]; std(mx*(pinv(mx)*dy1)-dy1)
+
+=== plot ===
+s=[x,y,dy,dy1];
+octave> save("-ascii", "data1", "s");
+gnuplot> plot "data1" every 23 using 2:1:3 with points palette
+
+============ deviation is in meters ===================
+
+fdx(x,const_y) = a1 + 200*cos(pi/30*x) - 100*sin(pi/12*x+pi/4) - 26.667*sin(pi/3*x) - 13.333*sin(pi*x) + 13.333*sin(pi*2*x) + 13.333*sin(pi*6*x);
+fdx(const_x,y) = a1*y + a2
+fdy(x,const_y) = a1*x + a2 + 13.333*sin(2*pi*x) + 13.333*sin(6*pi*x)
+fdy(const_x,y) = a1 + a2*sin(pi/30*y) + a3*cos(pi/30*y) + a4*sin(pi/12*y) + a5*cos(pi/12*y) + 26.667*sin(pi/3*y+pi/3)-13.333*sin(pi*y)
+x= 85.52 : -91.699 -167.853  161.329 -101.146 -31.353
+x= 97.84 : -81.268 -185.750  161.624 -99.873  -29.274
+x=110.16 : -41.649 -203.969  155.053 -100.783 -26.110
+
+============ deviation is in degrees ===================
+fdy(x,const_y) = a*sin(2*pi*x) + a*sin(6*pi*x) + k*x + b
+a seems to be fixed. k and b depends on const_y
+y=25 : k=8.6957e-06, b=-0.0038235, a=1.2377e-04
+y=32 : k=1.5521e-05, b=-0.0039060, a=1.2261e-04
+y=39 : k=2.1848e-05, b=-0.0014446, a=1.2151e-04
+y=46 : k=2.8788e-05, b=-0.0016958, a=1.2494e-04 (not accurate because too few data)
+
+fdy(const_x, y) = a1 + a2*sin(pi/30*x) + a3*cos(pi/30*x) + a4*sin(pi/12*x) + a5*cos(pi/12*x) + a6*sin(pi/3*x) + a7*sin(pi/3*x) - a6*sin(pi*x)
+x=85  : -8.2732e-04 -1.5124e-03 1.4490e-03 -9.0902e-04 -2.8145e-04 1.1991e-04 2.0821e-04
+x=110 : -3.5552e-04 -1.8277e-03 1.4183e-03 -9.0133e-04 -2.3908e-04 1.1972e-04 2.0889e-04
+
+fdx(x,const_y) = a1 + a2*sin(pi/30*x) + a3*cos(pi/30*x) - a4*sin(pi/12*x) - a4*cos(pi/12*x) - a5*2*sin(pi/3*x) - a5*sin(pi*x) + a5*sin(pi*2*x) + a5*sin(pi*6*x);
+y=25 : 2.9668e-03 1.8393e-04 1.9964e-03 6.9444e-04 1.3260e-04
+y=32 : 3.3789e-03 2.6538e-04 2.2214e-03 7.3521e-04 1.4072e-04
+y=39 : 3.8259e-03 2.3579e-04 2.5421e-03 7.9454e-04 1.5428e-04
+
+fdx(const_x, y) = (k*y+b)/cos(y*pi/180)
+This shows that the offset is in meters instead of degrees.
+110 -> k=2.2700e-05, b=0.0036548
+85  -> k=6.6709e-07, b=0.0018952
+
+=====================================
+
+Expected accuracy: 1.7979e-05 degree = 2 meters
+
+=====================================
+
+arr=load("-ascii", "file.txt"); x=arr(:,1); y=arr(:,2); dx=arr(:,3); dy=arr(:,4);
+n=length(x); xbar=sum(x)/n; dybar=sum(dy)/n; k=sum((x-xbar).*(dy-dybar))/sum((x-xbar).*(x-xbar)); b=dybar-k*xbar;
+
+================== inx-a-25.txt =======================================
+k =  9.0209e-06
+b = -0.0038576
+dy = f(x)
+dy = k*x + b + sin(2*pi*x)*0.00012 + sin(6*pi*x)*0.00012
+dx = f(x)
+dx = sin(2*pi*$1)*0.00012*1.2 + sin(6*pi*$1))*0.00012*1.2 - sin(0.333333*pi*$1)*0.00026 - sin(pi*$1))*0.00013 + ???
+
+=================== inx-a-32.txt ======================================
+k =  1.5526e-05
+b = -0.0039065
+
+
+=================== inx-a-39.txt ======================================
+k =  2.1833e-05
+b = -0.0014433
+dy = f(x)
+dy = k*x + b + sin(2*pi*x)*0.00012 + sin(6*pi*x)*0.00012
+dx = f(x)
+dx = sin(2*pi*$1)*0.00012*1.2 + sin(6*pi*$1))*0.00012*1.2 + sin(0.333333*pi*$1)*0.00032 + sin(pi*$1))*0.00016 + ???
+
+
+=================== inx-a-46.txt ======================================
+k =  2.8277e-05
+b = -0.0016306
+
+
+
+arr=load("-ascii", "iny-11016.txt");
+dy = (sin(2*pi*x+a)+sin(6*pi*x+b))*k + c
+a = 0
+b = 0
+k,c depends on y
+
+dy = sin(pi*y)*a + y*y*b + y*c + d
+
+
+dx = y*y*b + y*c + d
+
+dx = (sin(2*pi*x+a)+sin(6*pi*x+b))*k + y*y*b + y*c + d
