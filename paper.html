@@ -1,0 +1,1020 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"  
+  "http://www.w3.org/TR/html4/loose.dtd">  
+<html > 
+<head><title>The Deviation of China Map as a Regression Problem</title> 
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1"> 
+<meta name="generator" content="TeX4ht (http://www.cse.ohio-state.edu/~gurari/TeX4ht/)"> 
+<meta name="originator" content="TeX4ht (http://www.cse.ohio-state.edu/~gurari/TeX4ht/)"> 
+<!-- html --> 
+<meta name="src" content="paper.tex"> 
+<meta name="date" content="2013-10-08 14:27:00"> 
+<link rel="stylesheet" type="text/css" href="paper.css"> 
+</head><body 
+>
+   <div class="maketitle">
+                                                                  
+
+                                                                  
+                                                                  
+
+                                                                  
+
+<h2 class="titleHead">The Deviation of China Map as a Regression
+Problem</h2>
+<div class="author" ><span 
+class="cmr-12">Wu Yongzheng</span></div><br />
+<div class="date" ></div>
+   </div>
+   <h3 class="sectionHead"><span class="titlemark">1   </span> <a 
+ id="x1-10001"></a>Introduction</h3>
+<!--l. 17--><p class="noindent" >
+   <h3 class="sectionHead"><span class="titlemark">2   </span> <a 
+ id="x1-20002"></a>Notation</h3>
+<!--l. 18--><p class="noindent" >We need to find out two functions, <span 
+class="cmmi-10">f</span><sub><span 
+class="cmmi-7">x</span></sub>(<span 
+class="cmmi-10">x,y</span>) and <span 
+class="cmmi-10">f</span><sub><span 
+class="cmmi-7">y</span></sub>(<span 
+class="cmmi-10">x,y</span>), to describe the deviation. <span 
+class="cmmi-10">x</span>
+and <span 
+class="cmmi-10">y </span>are the true longitude and latitude respectively. <span 
+class="cmmi-10">f</span><sub><span 
+class="cmmi-7">x</span></sub>(<span 
+class="cmmi-10">x,y</span>) and <span 
+class="cmmi-10">f</span><sub><span 
+class="cmmi-7">y</span></sub>(<span 
+class="cmmi-10">x,y</span>)
+are the deviation delta at point (<span 
+class="cmmi-10">x,y</span>). In other words, if (<span 
+class="cmmi-10">x,y</span>) is the true
+coordinate, then (<span 
+class="cmmi-10">x </span>+ <span 
+class="cmmi-10">f</span><sub><span 
+class="cmmi-7">x</span></sub>(<span 
+class="cmmi-10">x,y</span>)<span 
+class="cmmi-10">,y </span>+ <span 
+class="cmmi-10">f</span><sub><span 
+class="cmmi-7">y</span></sub>(<span 
+class="cmmi-10">x,y</span>)) is the deviated coordinate. Since
+<span 
+class="cmsy-10">|</span><span 
+class="cmmi-10">f</span><sub><span 
+class="cmmi-7">x</span></sub>(<span 
+class="cmmi-10">x </span>+ <span 
+class="cmmi-10">d,y</span>) <span 
+class="cmsy-10">-</span><span 
+class="cmmi-10">f</span><sub><span 
+class="cmmi-7">x</span></sub>(<span 
+class="cmmi-10">x,y</span>)<span 
+class="cmsy-10">| </span>is much smaller than <span 
+class="cmmi-10">d </span>(and same for <span 
+class="cmmi-10">y</span>) we can also use the
+two functions to calculate the true coordinate from a deviated coordinate. Let
+(<span 
+class="cmmi-10">x,y</span>) be the deviated coordinate, (<span 
+class="cmmi-10">x </span><span 
+class="cmsy-10">- </span><span 
+class="cmmi-10">f</span><sub><span 
+class="cmmi-7">x</span></sub>(<span 
+class="cmmi-10">x,y</span>)<span 
+class="cmmi-10">,y </span><span 
+class="cmsy-10">- </span><span 
+class="cmmi-10">f</span><sub><span 
+class="cmmi-7">y</span></sub>(<span 
+class="cmmi-10">x,y</span>)) is the true
+coordinate.
+<!--l. 30--><p class="indent" >   In the following analysis, we will use octave. All the data
+used in the analysis has already been posted in my previous
+article<span class="footnote-mark"><a 
+href="paper2.html#fn1x0"><sup class="textsuperscript">1</sup></a></span><a 
+ id="x1-2001f1"></a> .
+   <h3 class="sectionHead"><span class="titlemark">3   </span> <a 
+ id="x1-30003"></a>The four 1D cases</h3>
+<!--l. 36--><p class="noindent" >We first solve the functions in one dimension by setting one parameter to be
+constant. I.e. instead of solving <span 
+class="cmmi-10">f</span><sub><span 
+class="cmmi-7">x</span></sub>(<span 
+class="cmmi-10">x,y</span>) directly, we first solve <span 
+class="cmmi-10">f</span><sub><span 
+class="cmmi-7">x</span></sub>(<span 
+class="cmmi-10">x,c</span>) and <span 
+class="cmmi-10">f</span><sub><span 
+class="cmmi-7">x</span></sub>(<span 
+class="cmmi-10">c,y</span>),
+where <span 
+class="cmmi-10">c </span>is a constant. For example, we will look at <span 
+class="cmmi-10">f</span><sub><span 
+class="cmmi-7">x</span></sub>(<span 
+class="cmmi-10">x,</span>39<span 
+class="cmmi-10">.</span>36) and <span 
+class="cmmi-10">f</span><sub><span 
+class="cmmi-7">x</span></sub>(110<span 
+class="cmmi-10">.</span>16<span 
+class="cmmi-10">,y</span>).
+Similarly, we will solve <span 
+class="cmmi-10">f</span><sub><span 
+class="cmmi-7">y</span></sub>(<span 
+class="cmmi-10">x,c</span>) and <span 
+class="cmmi-10">f</span><sub><span 
+class="cmmi-7">y</span></sub>(<span 
+class="cmmi-10">c,y</span>) before <span 
+class="cmmi-10">f</span><sub><span 
+class="cmmi-7">y</span></sub>(<span 
+class="cmmi-10">x,y</span>). In total, there are four
+1D cases.
+                                                                  
+
+                                                                  
+<!--l. 44--><p class="noindent" >
+   <h4 class="subsectionHead"><span class="titlemark">3.1   </span> <a 
+ id="x1-40003.1"></a><span 
+class="cmmi-10">f</span><sub><span 
+class="cmmi-7">x</span></sub>(<span 
+class="cmmi-10">const,y</span>)</h4>
+<!--l. 45--><p class="noindent" ><span 
+class="cmmi-10">f</span><sub><span 
+class="cmmi-7">x</span></sub>(<span 
+class="cmmi-10">const,y</span>) looks like to be the simplest, so we solve it first.
+<!--l. 47--><p class="noindent" ><span class="obeylines-h"><span class="verb"><span 
+class="cmtt-10">&#x003E;</span><span 
+class="cmtt-10">&#x00A0;data=load("-ascii",</span><span 
+class="cmtt-10">&#x00A0;"iny-f-110.txt");</span></span></span> <br 
+class="newline" /><span class="obeylines-h"><span class="verb"><span 
+class="cmtt-10">&#x003E;</span><span 
+class="cmtt-10">&#x00A0;y=data(:,2);</span></span></span> <br 
+class="newline" /><span class="obeylines-h"><span class="verb"><span 
+class="cmtt-10">&#x003E;</span><span 
+class="cmtt-10">&#x00A0;dx=data(:,3);</span></span></span> <br 
+class="newline" /><span class="obeylines-h"><span class="verb"><span 
+class="cmtt-10">&#x003E;</span><span 
+class="cmtt-10">&#x00A0;plot(y,dx)</span></span></span>                                          Figure&#x00A0;<a 
+href="#x1-40011">1<!--tex4ht:ref: fig:fxy-degree --></a>(left)
+<!--l. 53--><p class="indent" >   <hr class="figure"><div class="figure" 
+>
+                                                                  
+
+                                                                  
+<a 
+ id="x1-40011"></a>
+                                                                  
+
+                                                                  
+<div class="center" 
+>
+<!--l. 54--><p class="noindent" >
+
+<!--l. 55--><p class="noindent" ><img 
+src="fxy-degree.png" alt="PIC"  
+> <img 
+src="fxy-metre.png" alt="PIC"  
+></div>
+<br /> <div class="caption" 
+><span class="id">Figure&#x00A0;1: </span><span  
+class="content"><span 
+class="cmmi-10">f</span><sub><span 
+class="cmmi-7">x</span></sub>(110<span 
+class="cmmi-10">.</span>16<span 
+class="cmmi-10">,y</span>). Left: longitude deviation (y-axis) is in degrees; right:
+in metres.</span></div><!--tex4ht:label?: x1-40011 -->
+                                                                  
+
+                                                                  
+<!--l. 61--><p class="indent" >   </div><hr class="endfigure">
+<!--l. 63--><p class="indent" >   Figure&#x00A0;<a 
+href="#x1-40011">1<!--tex4ht:ref: fig:fxy-degree --></a>(left) shows the plot, <span 
+class="cmmi-10">f</span><sub><span 
+class="cmmi-7">x</span></sub>(110<span 
+class="cmmi-10">.</span>16<span 
+class="cmmi-10">,y</span>). The curve looks like a second order
+curve, but if we go that direction, it&#8217;s going to be very tough. It is a lot simpler if we
+measure the deviation in meters rather than degrees. Note that earth&#8217;s radius is
+6378137 meters in Google Map. I didn&#8217;t know this until the experiment was all
+finished. However, this shouldn&#8217;t cause any error even if I set the radius to 1
+meter, because in the end, meters is converted back to degrees and the error
+cancels.
+<!--l. 73--><p class="noindent" ><span class="obeylines-h"><span class="verb"><span 
+class="cmtt-10">&#x003E;</span><span 
+class="cmtt-10">&#x00A0;plot(y,dx.*cos(y./180.*pi).*6371000.*pi./180)</span></span></span>      Figure&#x00A0;<a 
+href="#x1-40011">1<!--tex4ht:ref: fig:fxy-degree --></a>(right)
+<!--l. 77--><p class="indent" >   Figure&#x00A0;<a 
+href="#x1-40011">1<!--tex4ht:ref: fig:fxy-degree --></a>(right) shows the plot where the deviation is measured in meters. It&#8217;s a
+linear function, thus we can do a simple linear regression.
+                                                                  
+
+                                                                  
+   <div class="verbatim" id="verbatim-1">
+&#x003E;&#x00A0;dx=dx.*cos(y./180.*pi).*6371000.*pi./180;
+&#x00A0;<br />&#x003E;&#x00A0;mx=[ones(size(y)),y];&#x00A0;std(mx*(pinv(mx)*dx)-dx)
+&#x00A0;<br />ans&#x00A0;=&#x00A0;&#x00A0;0.14664
+&#x00A0;<br />&#x003E;&#x00A0;pinv(mx)*dx
+&#x00A0;<br />ans&#x00A0;=
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;406.3954
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;2.5241
+</div>
+<!--l. 88--><p class="nopar" > The standard error, 0.14664 meter, is acceptable, because the input data&#8217;s resolution is about
+0.6 meter<span class="footnote-mark"><a 
+href="paper3.html#fn2x0"><sup class="textsuperscript">2</sup></a></span><a 
+ id="x1-4002f2"></a> 
+on average. The final function is
+   <table 
+class="equation"><tr><td>
+   <center class="math-display" >
+<img 
+src="paper0x.png" alt="f (110.16,y) = 406.3954 + 2.5241y
+ x
+" class="math-display" ><a 
+ id="x1-4003r1"></a></center></td><td class="equation-label">(1)</td></tr></table>
+<!--l. 97--><p class="nopar" >
+After trying out other constant longitudes, we find out that the two coefficients are
+different for different longitude. We have
+   <table 
+class="equation"><tr><td>
+   <center class="math-display" >
+<img 
+src="paper1x.png" alt="fx(x,y) = g1(x) + g2(x)&#x00D7; y
+" class="math-display" ><a 
+ id="x1-4004r2"></a></center></td><td class="equation-label">(2)</td></tr></table>
+<!--l. 104--><p class="nopar" >
+where <span 
+class="cmmi-10">g</span><sub><span 
+class="cmr-7">1</span></sub>(<span 
+class="cmmi-10">x</span>) and <span 
+class="cmmi-10">g</span><sub><span 
+class="cmr-7">2</span></sub>(<span 
+class="cmmi-10">x</span>) are not yet known.
+                                                                  
+
+                                                                  
+<!--l. 107--><p class="indent" >   In the following analysis, we will measure <span 
+class="cmmi-10">x </span>and <span 
+class="cmmi-10">y </span>in degrees, while measure
+<span 
+class="cmmi-10">f</span><sub><span 
+class="cmmi-7">x</span></sub>(<span 
+class="cmmi-10">x,y</span>) and <span 
+class="cmmi-10">f</span><sub><span 
+class="cmmi-7">y</span></sub>(<span 
+class="cmmi-10">x,y</span>) in meters. It makes our life a lot easier.
+   <h4 class="subsectionHead"><span class="titlemark">3.2   </span> <a 
+ id="x1-50003.2"></a><span 
+class="cmmi-10">f</span><sub><span 
+class="cmmi-7">y</span></sub>(<span 
+class="cmmi-10">x,const</span>)</h4>
+<!--l. 111--><p class="noindent" ><span 
+class="cmmi-10">f</span><sub><span 
+class="cmmi-7">y</span></sub>(<span 
+class="cmmi-10">x,const</span>) seems to be the second easiest one. It&#8217;s quite obvious that there are
+sinusoidal and linear components in the function. To find out the frequency of the
+sinusoidal components, we do a Fourier transform.
+                                                                  
+
+                                                                  
+   <div class="verbatim" id="verbatim-2">
+&#x003E;&#x00A0;data=load("-ascii",&#x00A0;"inx-f-39.txt");
+&#x00A0;<br />&#x003E;&#x00A0;x=data(:,1);
+&#x00A0;<br />&#x003E;&#x00A0;size(x)
+&#x00A0;<br />ans&#x00A0;=
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;9116&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;1
+&#x00A0;<br />&#x003E;&#x00A0;x(1)
+&#x00A0;<br />ans&#x00A0;=&#x00A0;&#x00A0;73.655
+&#x00A0;<br />&#x003E;&#x00A0;x(9116)
+&#x00A0;<br />ans&#x00A0;=&#x00A0;&#x00A0;119.23
+&#x00A0;<br />&#x003E;&#x00A0;dy=data(:,4).*(6371000*pi/180);
+</div>
+<!--l. 126--><p class="nopar" > <span class="obeylines-h"><span class="verb"><span 
+class="cmtt-10">&#x003E;</span><span 
+class="cmtt-10">&#x00A0;plot(x,dy)</span></span></span>                                          Figure&#x00A0;<a 
+href="#x1-50012">2<!--tex4ht:ref: fig:fyx-fft --></a>(left)
+<br 
+class="newline" /><span class="obeylines-h"><span class="verb"><span 
+class="cmtt-10">&#x003E;</span><span 
+class="cmtt-10">&#x00A0;plot(abs(fft(dy)))</span></span></span>                                 Figure&#x00A0;<a 
+href="#x1-50012">2<!--tex4ht:ref: fig:fyx-fft --></a>(right)
+<!--l. 130--><p class="indent" >   <hr class="figure"><div class="figure" 
+>
+                                                                  
+
+                                                                  
+<a 
+ id="x1-50012"></a>
+                                                                  
+
+                                                                  
+<div class="center" 
+>
+<!--l. 131--><p class="noindent" >
+
+<!--l. 132--><p class="noindent" ><img 
+src="fyx-data.png" alt="PIC"  
+> <img 
+src="fyx-fft.png" alt="PIC"  
+></div>
+<br /> <div class="caption" 
+><span class="id">Figure&#x00A0;2: </span><span  
+class="content"><span 
+class="cmmi-10">f</span><sub><span 
+class="cmmi-7">y</span></sub>(<span 
+class="cmmi-10">x,</span>39<span 
+class="cmmi-10">.</span>36). Left: the data points; right: FFT of the data</span></div><!--tex4ht:label?: x1-50012 -->
+                                                                  
+
+                                                                  
+<!--l. 137--><p class="indent" >   </div><hr class="endfigure">
+<!--l. 139--><p class="indent" >   Figure&#x00A0;<a 
+href="#x1-50012">2<!--tex4ht:ref: fig:fyx-fft --></a>(left) shows the data and Figure&#x00A0;<a 
+href="#x1-50012">2<!--tex4ht:ref: fig:fyx-fft --></a>(right) shows the data in frequency
+domain. The two peaks in the frequency domains are at 47 and 138, thus the frequencies
+are 46/45.575=1.0093 and 137/45.575=3.0060, where 45.575=119.23-73.655 is the
+range of x. Since the range of x is not multiple of the periods, we don&#8217;t get exact
+results, but after cutting the range, the exact results are 1 and 3. We then try to
+model it using <span 
+class="cmmi-10">b </span>+ <span 
+class="cmmi-10">kx </span>+ <span 
+class="cmmi-10">a</span><sub><span 
+class="cmr-7">1</span></sub><span 
+class="cmmi-10">sin</span>(2<span 
+class="cmmi-10">&#x03C0;x</span>) + <span 
+class="cmmi-10">a</span><sub><span 
+class="cmr-7">2</span></sub><span 
+class="cmmi-10">cos</span>(2<span 
+class="cmmi-10">&#x03C0;x</span>) + <span 
+class="cmmi-10">a</span><sub><span 
+class="cmr-7">3</span></sub><span 
+class="cmmi-10">cos</span>(6<span 
+class="cmmi-10">&#x03C0;x</span>) + <span 
+class="cmmi-10">a</span><sub><span 
+class="cmr-7">4</span></sub><span 
+class="cmmi-10">cos</span>(6<span 
+class="cmmi-10">&#x03C0;x</span>).
+                                                                  
+
+                                                                  
+   <div class="verbatim" id="verbatim-3">
+&#x003E;&#x00A0;mx=[ones(size(x)),x,sin(2.*pi.*x),cos(2.*pi.*x),sin(6.*pi.*x),\
+&#x00A0;<br />&#x00A0;&#x00A0;cos(6.*pi.*x)];
+&#x00A0;<br />&#x003E;&#x00A0;std(mx*(pinv(mx)*dy)-dy)
+&#x00A0;<br />ans&#x00A0;=&#x00A0;&#x00A0;0.38114
+</div>
+<!--l. 154--><p class="nopar" > <span class="obeylines-h"><span class="verb"><span 
+class="cmtt-10">&#x003E;</span><span 
+class="cmtt-10">&#x00A0;plot(x,dy,x,dy-mx*(pinv(mx)*dy))</span></span></span>                        Figure&#x00A0;<a 
+href="#x1-50023">3<!--tex4ht:ref: fig:fyx-lc --></a>
+<!--l. 157--><p class="indent" >   <hr class="figure"><div class="figure" 
+>
+                                                                  
+
+                                                                  
+<a 
+ id="x1-50023"></a>
+                                                                  
+
+                                                                  
+<div class="center" 
+>
+<!--l. 158--><p class="noindent" >
+
+<!--l. 159--><p class="noindent" ><img 
+src="fyx-lc.png" alt="PIC"  
+></div>
+<br /> <div class="caption" 
+><span class="id">Figure&#x00A0;3: </span><span  
+class="content">The data (blue) and the regression error (green).</span></div><!--tex4ht:label?: x1-50023 -->
+                                                                  
+
+                                                                  
+<!--l. 163--><p class="indent" >   </div><hr class="endfigure">
+<!--l. 164--><p class="indent" >   The standard error, 0.38114, is acceptable. We can also see this in Figure&#x00A0;<a 
+href="#x1-50023">3<!--tex4ht:ref: fig:fyx-lc --></a>. The
+regression error (difference between the data and our function) is close to zero. Let&#8217;s
+see the coefficients:
+                                                                  
+
+                                                                  
+   <div class="verbatim" id="verbatim-4">
+&#x003E;&#x00A0;pinv(mx)*dy
+&#x00A0;<br />ans&#x00A0;=
+&#x00A0;<br />&#x00A0;&#x00A0;-160.45195
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;2.42764
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;13.33287
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;-0.27150
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;13.30099
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;-0.82075
+</div>
+<!--l. 179--><p class="nopar" >
+<!--l. 181--><p class="indent" >   We can combine sin and cos of the same frequency.
+                                                                  
+
+                                                                  
+   <div class="verbatim" id="verbatim-5">
+&#x003E;&#x00A0;atan(-0.82075/13.30099)
+&#x00A0;<br />ans&#x00A0;=&#x00A0;&#x00A0;-0.061628
+&#x00A0;<br />&#x003E;&#x00A0;atan(-0.27150/13.33287)
+&#x00A0;<br />ans&#x00A0;=&#x00A0;&#x00A0;-0.020360
+&#x00A0;<br />&#x003E;&#x00A0;mx=[ones(size(x)),x,sin(2.*pi.*x-0.020360),sin(6.*pi.*x-0.061628)];
+&#x00A0;<br />&#x003E;&#x00A0;std(mx*(pinv(mx)*dy)-dy)
+&#x00A0;<br />ans&#x00A0;=&#x00A0;&#x00A0;0.38114
+&#x00A0;<br />&#x003E;&#x00A0;pinv(mx)*dy
+&#x00A0;<br />ans&#x00A0;=
+&#x00A0;<br />&#x00A0;&#x00A0;-160.4519
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;2.4276
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;13.3356
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;13.3263
+</div>
+<!--l. 197--><p class="nopar" > So the function is <div class="eqnarray">
+   <center class="math-display" >
+<img 
+src="paper2x.png" alt="fy(x,39.36)  =  - 160.45195+ 2.42764x + 13.33287sin(2&#x03C0;x )
+               - 0.27150cos(2&#x03C0;x) + 13.30099cos(6&#x03C0;x) - 0.82075cos(6&#x03C0;x)
+            =  - 160.45195+ 2.42764x + 13.3356sin(2&#x03C0;x - 0.061628)
+               +13.3263cos(6&#x03C0;x - 0.020360)                      (3)
+" class="math-display" ></center>
+</div>
+<!--l. 206--><p class="indent" >   After trying out other constant latitudes, we find out that the first two
+coefficients to be changing but the last 4 coefficients to be fixed. Thus, we know
+<div class="eqnarray">
+   <center class="math-display" >
+<img 
+src="paper3x.png" alt="fy(x,y) =   g1(y)+ g2(y)x+ 13.3356sin(2&#x03C0;x- 0.061628)
+            +13.3263cos(6&#x03C0;x- 0.020360)                  (4)
+" class="math-display" ><a 
+ id="x1-5004r4"></a></center>
+</div>where <span 
+class="cmmi-10">g</span><sub><span 
+class="cmr-7">1</span></sub>(<span 
+class="cmmi-10">y</span>) and <span 
+class="cmmi-10">g</span><sub><span 
+class="cmr-7">2</span></sub>(<span 
+class="cmmi-10">y</span>) are not yet known.
+   <h4 class="subsectionHead"><span class="titlemark">3.3   </span> <a 
+ id="x1-60003.3"></a><span 
+class="cmmi-10">f</span><sub><span 
+class="cmmi-7">x</span></sub>(<span 
+class="cmmi-10">x,const</span>)</h4>
+<!--l. 217--><p class="noindent" >Similar to previous one, we use Fourier transform to find out the sinusoidal
+components first.
+                                                                  
+
+                                                                  
+   <div class="verbatim" id="verbatim-6">
+&#x003E;&#x00A0;data=load("-ascii",&#x00A0;"inx-f-39.txt");
+&#x00A0;<br />&#x003E;&#x00A0;x=data(:,1);
+&#x00A0;<br />&#x003E;&#x00A0;dx=data(:,3).*cos(39.36./180.*pi).*6371000.*pi./180;
+</div>
+<!--l. 223--><p class="nopar" > <span class="obeylines-h"><span class="verb"><span 
+class="cmtt-10">&#x003E;</span><span 
+class="cmtt-10">&#x00A0;plot(x,dx)</span></span></span>                                          Figure&#x00A0;<a 
+href="#x1-60014">4<!--tex4ht:ref: fig:fxx-fft --></a>(left)
+<br 
+class="newline" /><span class="obeylines-h"><span class="verb"><span 
+class="cmtt-10">&#x003E;</span><span 
+class="cmtt-10">&#x00A0;plot(abs(fft(dx)))</span></span></span>                                 Figure&#x00A0;<a 
+href="#x1-60014">4<!--tex4ht:ref: fig:fxx-fft --></a>(right)
+<br 
+class="newline" />
+<!--l. 227--><p class="indent" >   <hr class="figure"><div class="figure" 
+>
+                                                                  
+
+                                                                  
+<a 
+ id="x1-60014"></a>
+                                                                  
+
+                                                                  
+<div class="center" 
+>
+<!--l. 228--><p class="noindent" >
+
+<!--l. 229--><p class="noindent" ><img 
+src="fxx-data.png" alt="PIC"  
+> <img 
+src="fxx-fft.png" alt="PIC"  
+></div>
+<br /> <div class="caption" 
+><span class="id">Figure&#x00A0;4: </span><span  
+class="content"><span 
+class="cmmi-10">f</span><sub><span 
+class="cmmi-7">x</span></sub>(<span 
+class="cmmi-10">x,</span>39<span 
+class="cmmi-10">.</span>36). Left: the data points; right: FFT of the data</span></div><!--tex4ht:label?: x1-60014 -->
+                                                                  
+
+                                                                  
+<!--l. 234--><p class="indent" >   </div><hr class="endfigure">
+<!--l. 236--><p class="indent" >   Figure&#x00A0;<a 
+href="#x1-60014">4<!--tex4ht:ref: fig:fxx-fft --></a>(left) shows the curve that we are going to fit. Figure&#x00A0;<a 
+href="#x1-60014">4<!--tex4ht:ref: fig:fxx-fft --></a>(right) shows the
+frequency domain. The peaks are at 9, 24, 47 and 138, so the frequencies are
+8/45.575=0.17553, 23/45.575=0.50466, 46/45.575=1.0093 and 137/45.575=3.0060.
+The exact frequencies are 1/6, 1/2, 1 and 3. Now, we try to fit the curve with the 4
+sinusoidal components and a linear component.
+                                                                  
+
+                                                                  
+   <div class="verbatim" id="verbatim-7">
+&#x003E;&#x00A0;mx=[ones(size(x)),x,sin(pi.*x./3),cos(pi.*x./3),sin(pi.*x),\
+&#x00A0;<br />&#x00A0;&#x00A0;cos((pi.*x)),sin(2.*pi.*x),cos(2.*pi.*x),sin(6.*pi.*x),\
+&#x00A0;<br />&#x00A0;&#x00A0;cos((6.*pi.*x))];&#x00A0;std(mx*(pinv(mx)*dx)-dx)
+&#x00A0;<br />ans&#x00A0;=&#x00A0;&#x00A0;119.96
+&#x00A0;<br />&#x003E;&#x00A0;plot(x,dx,x,dx-mx*(pinv(mx)*dx))
+</div>
+<!--l. 249--><p class="nopar" > <hr class="figure"><div class="figure" 
+>
+                                                                  
+
+                                                                  
+<a 
+ id="x1-60025"></a>
+                                                                  
+
+                                                                  
+<div class="center" 
+>
+<!--l. 251--><p class="noindent" >
+
+<!--l. 252--><p class="noindent" ><img 
+src="fxx-lc1.png" alt="PIC"  
+></div>
+<br /> <div class="caption" 
+><span class="id">Figure&#x00A0;5: </span><span  
+class="content">The data (blue) and the regression error (green).</span></div><!--tex4ht:label?: x1-60025 -->
+                                                                  
+
+                                                                  
+<!--l. 256--><p class="indent" >   </div><hr class="endfigure">
+<!--l. 257--><p class="indent" >   The standard error 119.96 meters is not acceptable. To see it, we plot the
+difference in Figure&#x00A0;<a 
+href="#x1-60025">5<!--tex4ht:ref: fig:fxx-lc1 --></a>. It seems that there are some low frequency components. We
+can deal with low frequency components with a bunch of polynomials.
+                                                                  
+
+                                                                  
+   <div class="verbatim" id="verbatim-8">
+&#x003E;&#x00A0;mx=[ones(size(x)),(x./mean(x)),(x./mean(x)).^2,(x./mean(x)).^3,\
+&#x00A0;<br />&#x00A0;&#x00A0;(x./mean(x)).^4,(x./mean(x)).^5,(x./mean(x)).^6,(x./mean(x)).^7,\
+&#x00A0;<br />&#x00A0;&#x00A0;(x./mean(x)).^8,(x./mean(x)).^9,sin(pi.*x./3),cos(pi.*x./3),\
+&#x00A0;<br />&#x00A0;&#x00A0;sin(pi.*x),cos((pi.*x)),sin(2.*pi.*x),cos(2.*pi.*x),sin(6.*pi.*x),\
+&#x00A0;<br />&#x00A0;&#x00A0;cos((6.*pi.*x))];&#x00A0;std(mx*(pinv(mx)*dx)-dx)
+&#x00A0;<br />ans&#x00A0;=&#x00A0;&#x00A0;0.78555
+</div>
+<!--l. 268--><p class="nopar" > It fits well with a 9-order polynomial. Note that we divide <span 
+class="cmmi-10">x </span>by <span 
+class="cmmi-10">mean</span>(<span 
+class="cmmi-10">x</span>) to
+make sure the values in the matrix have low dynamic range so as to reduce
+numeric error. Mathematically, they don&#8217;t make a difference. To see how our
+polynomial works, we can plot the polynomial and compare with the data (see
+Figure&#x00A0;<a 
+href="#x1-60036">6<!--tex4ht:ref: fig:fxx-lc2 --></a>).
+                                                                  
+
+                                                                  
+   <div class="verbatim" id="verbatim-9">
+&#x003E;&#x00A0;coeff=pinv(mx)*dx;
+&#x00A0;<br />&#x003E;&#x00A0;coeff(11:18)=0
+&#x00A0;<br />coeff&#x00A0;=
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;1.3529e+08
+&#x00A0;<br />&#x00A0;&#x00A0;-1.3862e+09
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;6.2344e+09
+&#x00A0;<br />&#x00A0;&#x00A0;-1.6167e+10
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;2.6655e+10
+&#x00A0;<br />&#x00A0;&#x00A0;-2.8993e+10
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;2.0816e+10
+&#x00A0;<br />&#x00A0;&#x00A0;-9.5166e+09
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;2.5150e+09
+&#x00A0;<br />&#x00A0;&#x00A0;-2.9286e+08
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;0.0000e+00
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;0.0000e+00
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;0.0000e+00
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;0.0000e+00
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;0.0000e+00
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;0.0000e+00
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;0.0000e+00
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;0.0000e+00
+&#x00A0;<br />&#x003E;&#x00A0;plot(x,dx,x,mx*coeff)
+</div>
+<!--l. 298--><p class="nopar" >
+<!--l. 300--><p class="indent" >   <hr class="figure"><div class="figure" 
+>
+                                                                  
+
+                                                                  
+<a 
+ id="x1-60036"></a>
+                                                                  
+
+                                                                  
+<div class="center" 
+>
+<!--l. 301--><p class="noindent" >
+
+<!--l. 302--><p class="noindent" ><img 
+src="fxx-lc2.png" alt="PIC"  
+></div>
+<br /> <div class="caption" 
+><span class="id">Figure&#x00A0;6:  </span><span  
+class="content">9-order  polynomial  (green)  and  9-order  polynomial  +  sinusoidal
+(blue)</span></div><!--tex4ht:label?: x1-60036 -->
+                                                                  
+
+                                                                  
+<!--l. 306--><p class="indent" >   </div><hr class="endfigure">
+<!--l. 308--><p class="indent" >   Although the 9-order polynomial fits the data well (error is 0.79 meters), the function is ugly.
+After lots of tries<span class="footnote-mark"><a 
+href="paper4.html#fn3x0"><sup class="textsuperscript">3</sup></a></span><a 
+ id="x1-6004f3"></a> ,
+I figured out that the low frequency component actually consists of a quadratic curve
+and two sinusoidal wave of period 60 and 24. Using this model, the regression error is
+0.39 meters and the function is simple and beautiful.
+                                                                  
+
+                                                                  
+   <div class="verbatim" id="verbatim-10">
+&#x003E;&#x00A0;mx=[ones(size(x)),x,x.*x,sin(pi.*x./30),cos(pi.*x./30),\
+&#x00A0;<br />&#x00A0;&#x00A0;sin(pi.*x./12),cos(pi.*x./12),sin(pi.*x./3),cos(pi.*x./3),\
+&#x00A0;<br />&#x00A0;&#x00A0;sin(pi.*x),cos((pi.*x)),sin(2.*pi.*x),cos(2.*pi.*x),sin(6.*pi.*x),\
+&#x00A0;<br />&#x00A0;&#x00A0;cos((6.*pi.*x))];&#x00A0;std(mx*(pinv(mx)*dx)-dx)
+&#x00A0;<br />ans&#x00A0;=&#x00A0;&#x00A0;0.38668
+&#x00A0;<br />&#x003E;&#x00A0;pinv(mx)*dx
+&#x00A0;<br />ans&#x00A0;=
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;1.2052e+03
+&#x00A0;<br />&#x00A0;&#x00A0;-1.8404e+01
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;9.4022e-02
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;8.3824e-01
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;2.0044e+02
+&#x00A0;<br />&#x00A0;&#x00A0;-7.0435e+01
+&#x00A0;<br />&#x00A0;&#x00A0;-7.0449e+01
+&#x00A0;<br />&#x00A0;&#x00A0;-2.6699e+01
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;9.1218e-02
+&#x00A0;<br />&#x00A0;&#x00A0;-1.3342e+01
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;1.3044e-01
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;1.3342e+01
+&#x00A0;<br />&#x00A0;&#x00A0;-2.7504e-01
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;1.3306e+01
+&#x00A0;<br />&#x00A0;&#x00A0;-8.2298e-01
+</div>
+<!--l. 344--><p class="nopar" >
+<!--l. 346--><p class="indent" >   Now let&#8217;s merge sin and cos.
+                                                                  
+
+                                                                  
+   <div class="verbatim" id="verbatim-11">
+&#x003E;&#x00A0;atan(2.0044e+02/8.3824e-01)
+&#x00A0;<br />ans&#x00A0;=&#x00A0;&#x00A0;1.5666
+&#x00A0;<br />&#x003E;&#x00A0;atan(-7.0449e+01/-7.0435e+01)
+&#x00A0;<br />ans&#x00A0;=&#x00A0;&#x00A0;0.78550
+&#x00A0;<br />&#x003E;&#x00A0;atan(9.1218e-02/-2.6699e+01)
+&#x00A0;<br />ans&#x00A0;=&#x00A0;&#x00A0;-0.0034165
+&#x00A0;<br />&#x003E;&#x00A0;atan(1.3044e-01/-1.3342e+01)
+&#x00A0;<br />ans&#x00A0;=&#x00A0;&#x00A0;-0.0097763
+&#x00A0;<br />&#x003E;&#x00A0;atan(-2.7504e-01/1.3342e+01)
+&#x00A0;<br />ans&#x00A0;=&#x00A0;&#x00A0;-0.020612
+&#x00A0;<br />&#x003E;&#x00A0;atan(-8.2298e-01/1.3306e+01)
+&#x00A0;<br />ans&#x00A0;=&#x00A0;&#x00A0;-0.061772
+&#x00A0;<br />&#x003E;&#x00A0;mx=[ones(size(x)),x,x.*x,sin(pi.*x./30+1.5666),sin(pi.*x./12+0.78550),\
+&#x00A0;<br />&#x00A0;&#x00A0;sin(pi.*x./3-0.0034165),sin(pi.*x-0.0097763),sin(2.*pi.*x-0.020612),\
+&#x00A0;<br />&#x00A0;&#x00A0;sin(6.*pi.*x-0.061772)];&#x00A0;std(mx*(pinv(mx)*dx)-dx)
+&#x00A0;<br />ans&#x00A0;=&#x00A0;&#x00A0;0.38668
+&#x00A0;<br />&#x003E;&#x00A0;pinv(mx)*dx
+&#x00A0;<br />ans&#x00A0;=
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;1.2051e+03
+&#x00A0;<br />&#x00A0;&#x00A0;-1.8402e+01
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;9.4012e-02
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;2.0045e+02
+&#x00A0;<br />&#x00A0;&#x00A0;-9.9620e+01
+&#x00A0;<br />&#x00A0;&#x00A0;-2.6699e+01
+&#x00A0;<br />&#x00A0;&#x00A0;-1.3343e+01
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;1.3344e+01
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;1.3332e+01
+</div>
+<!--l. 375--><p class="nopar" >
+<!--l. 377--><p class="indent" >   Finally, we have <div class="eqnarray">
+   <center class="math-display" >
+<img 
+src="paper4x.png" alt="f (x,39.36)  =  1205.1 - 18.402x+ 0.094012x2 + 200.45sin(&#x03C0;x&#x2215;30+ 1.5666)
+ x
+               - 99.62sin (&#x03C0;x &#x2215;12 + 0.78550)- 26.699sin(&#x03C0;x&#x2215;3- 0.0034165)
+               - 13.343sin (&#x03C0;x - 0.0097763)+ 13.344sin(2&#x03C0;x- 0.020612)
+               +13.332sin (6&#x03C0;x - 0.061772)                        (5)
+" class="math-display" ></center>
+</div>To see how the components fit the data, we can graduately add the higher
+                                                                  
+
+                                                                  
+frequency components. Figure 5.5 shows this this idea. Figure 5.6 is a zoomed in
+region in Figure 5.5. The first function (in red) is the quadratic function
+1205<span 
+class="cmmi-10">.</span>1 <span 
+class="cmsy-10">- </span>18<span 
+class="cmmi-10">.</span>402<span 
+class="cmmi-10">x </span>+ 0<span 
+class="cmmi-10">.</span>094012<span 
+class="cmmi-10">x</span><sup><span 
+class="cmr-7">2</span></sup>. The second function (in green) adds one sinusoidal
+component to it: 1205<span 
+class="cmmi-10">.</span>1 <span 
+class="cmsy-10">- </span>18<span 
+class="cmmi-10">.</span>402<span 
+class="cmmi-10">x </span>+ 0<span 
+class="cmmi-10">.</span>094012<span 
+class="cmmi-10">x</span><sup><span 
+class="cmr-7">2</span></sup> + 200<span 
+class="cmmi-10">.</span>45<span 
+class="cmmi-10">sin</span>(<span 
+class="cmmi-10">&#x03C0;x&#x2215;</span>30 + 1<span 
+class="cmmi-10">.</span>5666).
+The third function (in blue) adds one more sinusoidal component to it, etc.
+<hr class="figure"><div class="figure" 
+>
+                                                                  
+
+                                                                  
+<a 
+ id="x1-60067"></a>
+                                                                  
+
+                                                                  
+<div class="center" 
+>
+<!--l. 392--><p class="noindent" >
+
+<!--l. 393--><p class="noindent" ><img 
+src="fxx-lc3.png" alt="PIC"  
+> <img 
+src="fxx-lc4.png" alt="PIC"  
+></div>
+<br /> <div class="caption" 
+><span class="id">Figure&#x00A0;7: </span><span  
+class="content">Decomposition of Components. Left: overall; right: zoomed in. The
+first  function  (red)  has  only  the  lowest  frequency  component.  The  second
+function  (green)  adds  the  second  lowest  frequency  component  to  the  first
+function. The third (blue) adds another component, etc.</span></div><!--tex4ht:label?: x1-60067 -->
+                                                                  
+
+                                                                  
+<!--l. 403--><p class="indent" >   </div><hr class="endfigure">
+<!--l. 405--><p class="indent" >   After trying out other constant latitude, we found that only the first two
+coefficients are affected by latitude. The rest of the coefficients do not change. Thus,
+we have <div class="eqnarray">
+   <center class="math-display" >
+<img 
+src="paper5x.png" alt="fx(x,y)  =  g1(y)- g2(y)x + 0.094012x2 + 200.45sin(&#x03C0;x&#x2215;30+ 1.5666)
+           - 99.62sin(&#x03C0;x&#x2215;12+ 0.78550)- 26.699sin(&#x03C0;x&#x2215;3 - 0.0034165)
+
+           - 13.343sin(&#x03C0;x- 0.0097763)+ 13.344sin(2&#x03C0;x - 0.020612)
+           +13.332sin(6&#x03C0;x- 0.061772)                          (6)
+" class="math-display" ><a 
+ id="x1-6007r6"></a></center>
+</div>where <span 
+class="cmmi-10">g</span><sub><span 
+class="cmr-7">1</span></sub>(<span 
+class="cmmi-10">y</span>) and <span 
+class="cmmi-10">g</span><sub><span 
+class="cmr-7">2</span></sub>(<span 
+class="cmmi-10">y</span>) are not yet known.
+   <h4 class="subsectionHead"><span class="titlemark">3.4   </span> <a 
+ id="x1-70003.4"></a><span 
+class="cmmi-10">f</span><sub><span 
+class="cmmi-7">y</span></sub>(<span 
+class="cmmi-10">const,y</span>)</h4>
+<!--l. 419--><p class="noindent" >The process of finding <span 
+class="cmmi-10">f</span><sub><span 
+class="cmmi-7">y</span></sub>(<span 
+class="cmmi-10">const,y</span>) is similar to <span 
+class="cmmi-10">f</span><sub><span 
+class="cmmi-7">x</span></sub>(<span 
+class="cmmi-10">x,const</span>), except that the two high
+frequency sinusoidal components do not appear in <span 
+class="cmmi-10">f</span><sub><span 
+class="cmmi-7">y</span></sub>(<span 
+class="cmmi-10">const,y</span>).
+                                                                  
+
+                                                                  
+   <div class="verbatim" id="verbatim-12">
+&#x003E;&#x00A0;data=load("-ascii",&#x00A0;"iny-a-110.txt");
+&#x00A0;<br />&#x003E;&#x00A0;y=data(:,2);
+&#x00A0;<br />&#x003E;&#x00A0;dy=data(:,4).*(6371000*pi/180);
+&#x00A0;<br />&#x003E;&#x00A0;my=[ones(size(y)),y,y.*y,sin(pi.*y./30),cos(pi.*y./30),\
+&#x00A0;<br />&#x00A0;&#x00A0;sin(pi.*y./12),cos(pi.*y./12),sin(pi.*y./3),cos(pi.*y./3),\
+&#x00A0;<br />&#x00A0;&#x00A0;sin(pi.*y),cos((pi.*y))];&#x00A0;std(my*(pinv(my)*dy)-dy)
+&#x00A0;<br />ans&#x00A0;=&#x00A0;&#x00A0;&#x00A0;&#x00A0;0.16683
+&#x00A0;<br />&#x003E;&#x00A0;pinv(my)*dy
+&#x00A0;<br />ans&#x00A0;=
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;162.1
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;-22.422
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;0.41569
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;-172.78
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;56.189
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;-104.96
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;-29.351
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;13.251
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;23.113
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;-13.357
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;-0.061311
+&#x00A0;<br />&#x003E;&#x00A0;atan(56.189/-172.78)
+&#x00A0;<br />ans&#x00A0;=&#x00A0;&#x00A0;&#x00A0;-0.31442
+&#x00A0;<br />&#x003E;&#x00A0;atan(-29.351/-104.96)
+&#x00A0;<br />ans&#x00A0;=&#x00A0;&#x00A0;&#x00A0;&#x00A0;0.27267
+&#x00A0;<br />&#x003E;&#x00A0;atan(23.113/13.251)
+&#x00A0;<br />ans&#x00A0;=&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;1.0502
+&#x00A0;<br />&#x003E;&#x00A0;atan(-0.061311/-13.357)
+&#x00A0;<br />ans&#x00A0;=&#x00A0;&#x00A0;0.0045901
+&#x00A0;<br />&#x003E;&#x00A0;my=[ones(size(y)),y,y.*y,sin(pi.*y./30-0.31442),\
+&#x00A0;<br />&#x00A0;&#x00A0;sin(pi.*y./12+0.27267),sin(pi.*y./3+1.0502),\
+&#x00A0;<br />&#x00A0;&#x00A0;sin(pi.*y+0.0045901)];&#x00A0;std(my*(pinv(my)*dy)-dy)
+&#x00A0;<br />ans&#x00A0;=&#x00A0;&#x00A0;&#x00A0;&#x00A0;0.16683
+&#x00A0;<br />&#x003E;&#x00A0;pinv(my)*dy
+&#x00A0;<br />ans&#x00A0;=
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;162.09
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;-22.422
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;0.41568
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;-181.69
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;-108.99
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;26.643
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;-13.357
+</div>
+<!--l. 464--><p class="nopar" >
+<!--l. 466--><p class="indent" >   We have <div class="eqnarray">
+                                                                  
+
+                                                                  
+   <center class="math-display" >
+<img 
+src="paper6x.png" alt="                                       2
+fy(110.16,y) =   162.09- 22.422y + 0.41568y
+                - 181.69sin(&#x03C0;y&#x2215;30- 0.31442) - 108.99sin(&#x03C0;y&#x2215;12 +0.27267)
+                +26.643sin(&#x03C0;y&#x2215;3+ 1.05)- 13.357sin (&#x03C0;y - 0.00459)    (7)
+    f (x,y) =   g(x)+ g (x)y+ 0.41568y2
+     y          1      2
+                - 181.69sin(&#x03C0;y&#x2215;30- 0.31442) - 108.99sin(&#x03C0;y&#x2215;12 +0.27267)
+                +26.643sin(&#x03C0;y&#x2215;3+ 1.05)- 13.357sin (&#x03C0;y - 0.00459)    (8)
+" class="math-display" ><a 
+ id="x1-7001r8"></a></center>
+</div>
+<!--l. 477--><p class="noindent" >
+   <h3 class="sectionHead"><span class="titlemark">4   </span> <a 
+ id="x1-80004"></a>The final 2D case: <span 
+class="cmmi-10">f</span><sub><span 
+class="cmmi-7">x</span></sub>(<span 
+class="cmmi-10">x,y</span>) and <span 
+class="cmmi-10">f</span><sub><span 
+class="cmmi-7">y</span></sub>(<span 
+class="cmmi-10">x,y</span>)</h3>
+<!--l. 479--><p class="noindent" >From Equation&#x00A0;<a 
+href="#x1-6007r6">6<!--tex4ht:ref: eq:fxx --></a> and <a 
+href="#x1-4004r2">2<!--tex4ht:ref: eq:fxy --></a> we know that <span 
+class="cmmi-10">f</span><sub><span 
+class="cmmi-7">x</span></sub>(<span 
+class="cmmi-10">x,y</span>) must be in the form of Equation&#x00A0;<a 
+href="#x1-8001r9">9<!--tex4ht:ref: eq:fxp --></a>.
+Similarly, from Equation&#x00A0;<a 
+href="#x1-5004r4">4<!--tex4ht:ref: eq:fyx --></a> and <a 
+href="#x1-7001r8">8<!--tex4ht:ref: eq:fyy --></a> we know <span 
+class="cmmi-10">f</span><sub><span 
+class="cmmi-7">y</span></sub>(<span 
+class="cmmi-10">x,y</span>) must be in the form of
+Equation&#x00A0;<a 
+href="#x1-8001r10">10<!--tex4ht:ref: eq:fyp --></a>. What&#8217;s left now is to determine the parameters.
+<!--l. 484--><p class="indent" >   <div class="eqnarray">
+   <center class="math-display" >
+<img 
+src="paper7x.png" alt="                                   2
+fx(x,y)  =  a1 + a2x + a3y + a4xy+ a5x
+           +a6sin(&#x03C0;x&#x2215;30+ b1)+ a7sin (&#x03C0;x &#x2215;12+ b2) + a8sin(&#x03C0;x&#x2215;3+ b3)
+           +a9sin(&#x03C0;x +b4)+ a10sin (2&#x03C0;x + b5) + a11sin(6&#x03C0;x+ b6)   (9)
+f(x,y)  =  c + c x+ c y+ c xy+ c y2
+ y          1   2    3    4     5
+           +c6sin(&#x03C0;y&#x2215;30+ d1)+ c7sin(&#x03C0;y&#x2215;12 +d2)+ c8sin(&#x03C0;y &#x2215;3+ d3)
+           +c9sin(&#x03C0;y+ d4)+ c10sin(2&#x03C0;x + d5) +c11sin (6&#x03C0;x + d6)  (10)
+" class="math-display" ><a 
+ id="x1-8001r9"></a><a 
+ id="x1-8001r10"></a></center>
+</div>
+<!--l. 495--><p class="indent" >   Applying the previous linear regression method on the data file <a 
+href="google-grid40.tsv" class="url" ><span 
+class="cmtt-10">google-grid40.tsv</span></a>,
+we can determine all the parameters easily. The octave commands are skipped. The
+resulting equations are shown below and their standard errors are 0.4373 and 0.43998
+meters respectively, which are larger than the four 1D cases, but still below the input
+data&#8217;s resolution.
+                                                                  
+
+                                                                  
+<!--l. 502--><p class="indent" >   <div class="eqnarray">
+   <center class="math-display" >
+<img 
+src="paper8x.png" alt="fx(x,y)  =  1596.7- 23.578x - 8.431y +0.0993xy+ 0.10056x2
+           - 199.11sin(&#x03C0;x&#x2215;30- 1.5692) - 99.77sin (&#x03C0;x&#x2215;12 + 0.78662)
+
+           - 26.687sin(&#x03C0;x&#x2215;3- 0.0040926)- 13.344sin(&#x03C0;x - 0.012222)
+           +13.338sin(2&#x03C0;x- 0.024649) +13.331sin(6&#x03C0;x - 0.073931)(11)
+fy(x,y)  =  42.304- 1.522x - 10.376y +0.10032xy+ 0.041777y2
+           - 217.35sin(&#x03C0;y&#x2215;30- 0.71213)- 106.38sin(&#x03C0;y&#x2215;12 +0.28733)
+
+           +26.698sin(&#x03C0;y&#x2215;3+ 1.0481) - 13.335sin(&#x03C0;y + 0.00012317)
+           +13.329sin(2&#x03C0;x- 0.024639) +13.319sin(6&#x03C0;x - 0.073933)(12)
+" class="math-display" ></center>
+</div>
+<!--l. 513--><p class="noindent" >
+   <h3 class="sectionHead"><span class="titlemark">5   </span> <a 
+ id="x1-90005"></a>Evaluation</h3>
+<!--l. 515--><p class="noindent" >To check their correctness, we can compute a deviated coordinate and check
+whether it aligns with the deviated map. We now compute the deviated
+coordinate of the Monument to the People&#8217;s Heroes using its true coordinate
+(116<span 
+class="cmmi-10">.</span>391667<span 
+class="cmmi-10">,</span>39<span 
+class="cmmi-10">.</span>903056).<span class="footnote-mark"><a 
+href="paper5.html#fn4x0"><sup class="textsuperscript">4</sup></a></span><a 
+ id="x1-9001f4"></a> 
+<span 
+class="cmmi-10">f</span><sub><span 
+class="cmmi-7">x</span></sub>(116<span 
+class="cmmi-10">.</span>391667<span 
+class="cmmi-10">,</span>39<span 
+class="cmmi-10">.</span>903056) = 531<span 
+class="cmmi-10">.</span>91 meters and <span 
+class="cmmi-10">f</span><sub><span 
+class="cmmi-7">y</span></sub>(116<span 
+class="cmmi-10">.</span>391667<span 
+class="cmmi-10">,</span>39<span 
+class="cmmi-10">.</span>903056) = 155<span 
+class="cmmi-10">.</span>39
+meters. This means that the deviated coordinate is 531.91 meters to the east and
+155.39 to the north. We then convert meters into degrees and adds them to the true
+coordinate.
+<!--l. 528--><p class="indent" >   <div class="eqnarray">
+   <center class="math-display" >
+<img 
+src="paper9x.png" alt="x&#x2032;  =  116.391667 + 531.91&#x00D7; 360&#x2215;(2&#x03C0;&#x00D7; 6371000&#x00D7; cos( 2&#x03C0;-&#x00D7; 39.903056))
+                                                360
+    =  116.397903
+y&#x2032;  =  39.903056 + 155.39&#x00D7; 360&#x2215;(2&#x03C0;&#x00D7; 6371000)
+    =  39.904453
+" class="math-display" ></center>
+</div>
+<!--l. 535--><p class="indent" >   <hr class="figure"><div class="figure" 
+>
+                                                                  
+
+                                                                  
+<a 
+ id="x1-90038"></a>
+                                                                  
+
+                                                                  
+<div class="center" 
+>
+<!--l. 536--><p class="noindent" >
+
+<!--l. 537--><p class="noindent" ><img 
+src="gmapsat.png" alt="PIC"  
+></div>
+<br /> <div class="caption" 
+><span class="id">Figure&#x00A0;8: </span><span  
+class="content">The monument&#8217;s true coordinate in GMap&#8217;s satellite image</span></div><!--tex4ht:label?: x1-90038 -->
+                                                                  
+
+                                                                  
+<!--l. 541--><p class="indent" >   </div><hr class="endfigure">
+<!--l. 543--><p class="indent" >   <hr class="figure"><div class="figure" 
+>
+                                                                  
+
+                                                                  
+<a 
+ id="x1-90049"></a>
+                                                                  
+
+                                                                  
+<div class="center" 
+>
+<!--l. 544--><p class="noindent" >
+
+<!--l. 545--><p class="noindent" ><img 
+src="gmapstr.png" alt="PIC"  
+></div>
+<br /> <div class="caption" 
+><span class="id">Figure&#x00A0;9: </span><span  
+class="content">The monument&#8217;s deviated coordinate in GMap&#8217;s street map</span></div><!--tex4ht:label?: x1-90049 -->
+                                                                  
+
+                                                                  
+<!--l. 549--><p class="indent" >   </div><hr class="endfigure">
+<!--l. 551--><p class="indent" >   The green arrow in Figure&#x00A0;<a 
+href="#x1-90038">8<!--tex4ht:ref: fig:gmapsat --></a> shows the true coordinate in the Google
+Maps&#8217; satellite image. Figure&#x00A0;<a 
+href="#x1-90049">9<!--tex4ht:ref: fig:gmapstr --></a> shows the deviated coordinate in the Google
+Maps&#8217; street map. The red balloon, which is the nearest landmark, should be
+ignored. The green arrows in both maps are slightly to the southeast of
+the monument center, but as long as they offset the same amount, it is as
+good.
+    
+</body></html> 
+
+                                                                  
+
+
